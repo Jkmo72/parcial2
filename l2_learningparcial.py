@@ -101,8 +101,10 @@ class LearningSwitch (object):
     def flood (message = None):
       """ Floods the packet """
       msg = of.ofp_packet_out()
-      if time.time() - self.connection.connect_time >= _flood_delay:
-        # Only flood if we've been connected for a little while...
+      #if time.time() - self.connection.connect_time >= _flood_delay:
+      if time.time() - self.connection.connect_time >= 5000:
+
+      # Only flood if we've been connected for a little while...
 
         if self.hold_down_expired is False:
           # Oh yes it is!
