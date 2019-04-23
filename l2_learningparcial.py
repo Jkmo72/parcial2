@@ -1,4 +1,5 @@
 # Copyright 2011-2012 James McCauley
+# Hola estos esuna pruba
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at:
@@ -10,10 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-# Codigo parcial 2 electica 4 Camilo Bohada - Camilo Jerez
-# Unitec
-
 
 """
 An L2 learning switch.
@@ -75,16 +72,29 @@ class LearningSwitch (object):
     self.connection = connection
     self.transparent = transparent
 
-
-
     # Our table
     self.macToPort = {}
+
+# VER PAYLOAD
+
+# print 'DPID: ', self.connection.dpid
+   #   print 'IN PORT: ', packet_in.in_port
+    #  print packet.dst
+     # print packet.payload.protosrc
+     # print packet.payload.protodst
+     # print packet.payload.hwdst
+     # print packet.payload.hwsrc
+
 
 # Our firewall table
     self.firewall = {}
 
-
-    # We want to hear PacketIn messages, so we listen
+	#REGLAS DE BLOQUEO POR MAC
+	
+    # Add a Couple of Rules
+    self.AddRule('00-00-00-00-00-01',EthAddr('00:00:00:00:00:02'))
+    self.AddRule('00-00-00-00-00-02',EthAddr('00:00:00:00:00:03'))	
+     # We want to hear PacketIn messages, so we listen
     # to the connection
     connection.addListeners(self)
 
@@ -99,6 +109,14 @@ class LearningSwitch (object):
     """
     Handle packet in messages from the switch to implement above algorithm.
     """
+
+   # packet = event.parsed
+   # if packet.type == packet.IP_TYPE:
+#	ip_packet = packet.payload
+#	ip_origen = ip_packet.srcip
+#	print "La IP de origen es: ", ip_origen
+#	print "La MAC de origen es:  ", packet.src 
+
 
     def flood (message = None):
       """ Floods the packet """
@@ -170,7 +188,7 @@ class LearningSwitch (object):
         msg = of.ofp_flow_mod()
         msg.match = of.ofp_match.from_packet(packet, event.port)
         msg.idle_timeout = 5
-        msg.hard_timeout = 5
+        msg.hard_timeout = 15
         msg.actions.append(of.ofp_action_output(port = port))
         msg.data = event.ofp # 6a
         self.connection.send(msg)
