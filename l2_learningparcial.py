@@ -122,7 +122,7 @@ class LearningSwitch (object):
       msg.in_port = event.port
       self.connection.send(msg)
 
-    def drop (duration = None):
+    def drop (duration = 5):
       """
       Drops this packet and optionally installs a flow to continue
       dropping similar ones for a while
@@ -167,8 +167,8 @@ class LearningSwitch (object):
                   (packet.src, event.port, packet.dst, port))
         msg = of.ofp_flow_mod()
         msg.match = of.ofp_match.from_packet(packet, event.port)
-        msg.idle_timeout = 5
-        msg.hard_timeout = 5
+        msg.idle_timeout = 10
+        msg.hard_timeout = 30
         msg.actions.append(of.ofp_action_output(port = port))
         msg.data = event.ofp # 6a
         self.connection.send(msg)
