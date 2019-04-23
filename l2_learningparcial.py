@@ -172,6 +172,19 @@ class LearningSwitch (object):
         msg.actions.append(of.ofp_action_output(port = port))
         msg.data = event.ofp # 6a
         self.connection.send(msg)
+      
+      ##
+        
+        from statsd import StatsClient
+
+        statsd = StatsClient()
+
+        start = time.time()
+        time.sleep(3)
+
+        # You must convert to milliseconds:
+        dt = int((time.time() - start) * 5000)
+        statsd.timing('slept', dt)
 
 
 class l2_learning (object):
