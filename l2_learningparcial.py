@@ -1,16 +1,22 @@
-# Copyright 2011-2012 James McCauley
-# Hola estos esuna pruba
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at:
+# Copyright 2011 James McCauley
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# This file is part of POX.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# POX is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# POX is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with POX.  If not, see <http://www.gnu.org/licenses/>.
+
+# Parcial 2 Camilo Bohada - Camilo Jerez
+
 
 """
 An L2 learning switch.
@@ -19,9 +25,9 @@ It is somwhat similar to NOX's pyswitch in that it installs
 exact-match rules for each flow.
 """
 
-from pox.core import core #Libreria principal pox
-import pox.openflow.libopenflow_01 as of #Importa protocolo openflow
-from pox.lib.util import dpid_to_str #
+from pox.core import core
+import pox.openflow.libopenflow_01 as of
+from pox.lib.util import dpid_to_str
 from pox.lib.util import str_to_bool
 import time
 
@@ -75,18 +81,9 @@ class LearningSwitch (object):
     # Our table
     self.macToPort = {}
 
-
-# Our firewall table
-    self.firewall = {}
-
-	
-	
-    # Add a Couple of Rules
-   
-     # We want to hear PacketIn messages, so we listen
+    # We want to hear PacketIn messages, so we listen
     # to the connection
     connection.addListeners(self)
-
 
     # We just use this to know when to log a helpful message
     self.hold_down_expired = _flood_delay == 0
@@ -99,13 +96,7 @@ class LearningSwitch (object):
     Handle packet in messages from the switch to implement above algorithm.
     """
 
-   # packet = event.parsed
-   # if packet.type == packet.IP_TYPE:
-#	ip_packet = packet.payload
-#	ip_origen = ip_packet.srcip
-#	print "La IP de origen es: ", ip_origen
-#	print "La MAC de origen es:  ", packet.src 
-
+    packet = event.parsed
 
     def flood (message = None):
       """ Floods the packet """
@@ -181,8 +172,6 @@ class LearningSwitch (object):
         msg.actions.append(of.ofp_action_output(port = port))
         msg.data = event.ofp # 6a
         self.connection.send(msg)
-	print "Ruta enviada al SW"
-
 
 
 class l2_learning (object):
