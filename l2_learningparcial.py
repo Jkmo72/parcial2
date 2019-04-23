@@ -175,17 +175,7 @@ class LearningSwitch (object):
       
       ##
         
-        from statsd import StatsClient
-
-        statsd = StatsClient()
-
-        start = time.time()
-        time.sleep(3)
-
-        # You must convert to milliseconds:
-        dt = int((time.time() - start) * 5000)
-        statsd.timing('slept', dt)
-
+     
 
 class l2_learning (object):
   """
