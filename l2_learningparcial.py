@@ -174,8 +174,7 @@ class LearningSwitch (object):
         msg.actions.append(of.ofp_action_output(port = port))
         msg.data = event.ofp # 6a
         self.connection.send(msg)
-        print "Control"
-      
+     
       ##
         
      
