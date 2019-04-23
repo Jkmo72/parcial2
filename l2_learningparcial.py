@@ -122,7 +122,7 @@ class LearningSwitch (object):
       msg.in_port = event.port
       self.connection.send(msg)
 
-    def drop (duration = 5):
+    def drop (duration = None):
       """
       Drops this packet and optionally installs a flow to continue
       dropping similar ones for a while
